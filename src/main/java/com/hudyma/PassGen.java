@@ -3,7 +3,10 @@ package com.hudyma;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.swing.*;
 
 public class PassGen extends JFrame {
@@ -32,21 +35,33 @@ public class PassGen extends JFrame {
     private static String generator(boolean generateSymbols, int size) {
         StringBuilder result = new StringBuilder();
         if (!generateSymbols) {
-            for (int i = 0; i < size/3; i++) {
+            for (int i = 0; i < size / 3; i++) {
                 result.append(PassGen.randomize(26, 65));
                 result.append(PassGen.randomize(9, 48));
                 result.append(PassGen.randomize(25, 97));
             }
             result.append(PassGen.randomize(9, 48));
+            shuffle(result);
         } else {
             for (int i = 0; i < size; i++) {
-                result.append(PassGen.randomize(93, + 33));
+                result.append(PassGen.randomize(93, +33));
             }
         }
         return result.toString();
     }
 
-    private static char randomize (int range, int startingPos){
+    private static StringBuilder shuffle(StringBuilder str) {
+        List<String> list = Arrays.asList(str.toString().split(""));
+        Collections.shuffle(list);
+        StringBuilder res = new StringBuilder();
+        for (String s: list){
+            res.append(s);
+        }
+        return res;
+    }
+
+
+    private static char randomize(int range, int startingPos) {
         return (char) (new Random().nextInt((range)) + startingPos);
     }
 
